@@ -13,7 +13,7 @@ const Profile = React.lazy(() => import('../Profile/Profile.jsx'));
 const MainWrapper = styled.main`
   width: 80%;
   height: 100%;
-  background-color: #8BC34A;
+  background-color: #F7F7F7;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

@@ -3,16 +3,17 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import fetchProfile from './../../actions/fetchProfile';
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton';
 
 const ProfileList = styled.ul`
     margin: 0;
-    background-color: #CDDC39;
+    background-color: #E8E9EA;
 `
 const ProfileWrapper = styled.div`
-    width: 50%;
     margin: 0 auto;
     border-radius: 5px;
-    border: 2px solid #A11FF4;
+    border: 2px solid #E8EEEE;
+    box-shadow: 0px 0px 22px -20px black;
     margin-top: 10px;
 `
 
@@ -32,14 +33,10 @@ class Profile extends Component {
 
     render() {
         let {city, languages, social} = this.props.profile;
-        const {isError, isLoading} = this.props;
+        const {isError} = this.props;
         
         if (isError.error) {
             return this.errorHandle(isError)
-        }
-
-        if (isLoading) {
-            return <h2>Loading...</h2>
         }
 
         let langsLi;
@@ -55,9 +52,9 @@ class Profile extends Component {
         return ( 
             <ProfileWrapper>
                 <ProfileList>
-                    <li>City: <span>{city}</span> </li>
-                    <li>Languages: <ul>{langsLi}</ul> </li>
-                    <li>Socials: <ul>{socialsLi}</ul> </li>
+                    <li>City: <span>{city ? city : <Skeleton width={200}/>}</span> </li>
+                    <li>Languages: <ul>{langsLi ? langsLi : <Skeleton count={2}/>}</ul> </li>
+                    <li>Socials: <ul>{socialsLi ? socialsLi : <Skeleton count={6} />}</ul> </li>
                 </ProfileList>
             </ProfileWrapper> 
         )

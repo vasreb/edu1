@@ -17,7 +17,7 @@ const HeaderList = styled.ul`
     padding: 0px 15px;
     list-style: none;
     margin: 0;
-    background-color: #2196F3;
+    background-color: #F1F3F4;
     box-sizing: border-box;
 `
 const HeaderItem = styled.li`
@@ -27,7 +27,7 @@ const HeaderItem = styled.li`
     padding: 0 15px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-size: 23px;
-    background-color: #03A9F4;
+    background-color: #E8E9EA;
     text-decoration: none;
 `
 const StyledLink = styled(Link)`
@@ -36,7 +36,7 @@ const StyledLink = styled(Link)`
     color: black;
 `
 const HeaderItemImportant = styled(HeaderItem)`
-    background-color: #00BCD4;
+    background-color: #CEE4ED;
 `
 
 function Header(props) {

@@ -6,12 +6,12 @@ import { Redirect } from 'react-router';
 import styled from 'styled-components'
 
 const LoginWrapper = styled.div`
-    margin-left: auto;
-    margin-right: auto;
+    margin: 200px auto;;
     display: inline-flex;
     flex-direction: column;
     padding: 10px;
-    background-color: #CDDC39;  
+    background-color: #E8E9EA;  
+    box-shadow: 0px 0px 22px -20px black;
 `
 const LoginForm = styled.form`
     margin: auto;

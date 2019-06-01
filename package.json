@@ -2,7 +2,7 @@
   "name": "edu1",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://vasreb.github.io/edu1/",
+  "homepage": "https://vasreb.github.io/edu1",
   "dependencies": {
     "axios": "^0.18.0",
     "gh-pages": "^2.0.1",
@@ -12,6 +12,7 @@
     "react-redux": "^7.0.3",
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
+    "react-transition-group": "^4.1.0",
     "redux": "^4.0.1",
     "redux-form": "^8.2.1",
     "redux-logger": "^3.0.6",
@@ -40,5 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-loading-skeleton": "^1.1.2"
   }
 }

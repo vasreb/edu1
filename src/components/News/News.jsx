@@ -28,9 +28,6 @@ class News extends Component {
         if (isError.error) {
             return <NewsTitle>Load Error: {isError.payload.toString()}</NewsTitle>
         }
-        if (isLoading) {
-            return <NewsTitle>Loading...</NewsTitle>
-        }
         const Articles = this.props.articles.map(
             article => <NewsItem key={article.id}><Article data={article}/></NewsItem>
         )
@@ -38,9 +35,10 @@ class News extends Component {
             <div>
                 <NewsTitle>News</NewsTitle>
                 <NewsWrapper>
-                    {Articles}
+                    {!isLoading ? Articles : Array(2).fill(<NewsItem><Article /></NewsItem>)}
                 </NewsWrapper>
-            </div> 
+            
+            </div>
         )
     }
 }

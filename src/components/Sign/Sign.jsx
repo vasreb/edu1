@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { UNLOGIN } from '../../constants/constants';
-import styled from 'styled-components'
+import styled from 'styled-components';
 
 
 const SignText = styled.div`
