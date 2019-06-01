@@ -4,20 +4,44 @@ import { connect } from 'react-redux'
 import fetchProfile from './../../actions/fetchProfile'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
+import PropTypes from 'prop-types'
 
 const ProfileList = styled.ul`
 	margin: 0;
 	background-color: #e8e9ea;
 `
 const ProfileWrapper = styled.div`
+	width: 50%;
 	margin: 0 auto;
 	border-radius: 5px;
 	border: 2px solid #e8eeee;
 	box-shadow: 0px 0px 22px -20px black;
 	margin-top: 10px;
 `
+const ProfileError = styled.h2`
+	font-family: Verdana, Geneva, Tahoma, sans-serif;
+	font-size: 15px;
+	margin: 5px 0px;
+`
 
 class Profile extends Component {
+	static propTypes = {
+		profile: PropTypes.shape({
+			city: PropTypes.string,
+			languages: PropTypes.arrayOf(PropTypes.string),
+			social: PropTypes.arrayOf(
+				PropTypes.shape({
+					label: PropTypes.string,
+					link: PropTypes.string,
+				})
+			),
+		}),
+		isError: PropTypes.shape({
+			error: PropTypes.bool.isRequired,
+			payload: PropTypes.string,
+		}).isRequired,
+	}
+
 	componentDidMount() {
 		this.props.load()
 	}
@@ -25,7 +49,9 @@ class Profile extends Component {
 	errorHandle = isError => {
 		switch (isError.payload) {
 			case 'user_not_found':
-				return <h2 className="profile__error">User not found</h2>
+				return <ProfileError>User not found</ProfileError>
+			case 'wrong_user_data':
+				return <ProfileError>Wrong user data</ProfileError>
 			default:
 				return <h2>Error: {isError.payload}</h2>
 		}
@@ -33,39 +59,40 @@ class Profile extends Component {
 
 	render() {
 		let { city, languages, social } = this.props.profile
-		const { isError } = this.props
+		const { isError, isLoading } = this.props
 
 		if (isError.error) {
 			return this.errorHandle(isError)
 		}
 
-		let langsLi
-		let socialsLi
-
-		if (languages) {
-			langsLi = languages.map(lang => {
-				return <li key={lang}>{lang}</li>
-			})
-		}
-		if (social) {
-			socialsLi = social.map(soc => (
-				<li key={soc.label}>
-					{soc.label} <br /> {soc.link}
-				</li>
-			))
+		try {
+			if (isLoading) {
+				city = <Skeleton />
+				languages = <Skeleton count={2} />
+				social = <Skeleton count={6} />
+			} else {
+				languages = languages.map(lang => <li key={lang}>{lang}</li>)
+				social = social.map(soc => (
+					<li key={soc.label}>
+						{soc.label} <br /> {soc.link}
+					</li>
+				))
+			}
+		} catch (e) {
+			this.errorHandle({ error: true, payload: 'wrong_user_data' })
 		}
 
 		return (
 			<ProfileWrapper>
 				<ProfileList>
 					<li>
-						City: <span>{city ? city : <Skeleton width={200} />}</span>{' '}
+						City: <span>{city}</span>
 					</li>
 					<li>
-						Languages: <ul>{langsLi ? langsLi : <Skeleton count={2} />}</ul>{' '}
+						Languages: <ul>{languages}</ul>
 					</li>
 					<li>
-						Socials: <ul>{socialsLi ? socialsLi : <Skeleton count={6} />}</ul>{' '}
+						Socials: <ul>{social}</ul>
 					</li>
 				</ProfileList>
 			</ProfileWrapper>
@@ -75,10 +102,11 @@ class Profile extends Component {
 
 const mapStateToProps = state => {
 	const {
-		profile,
 		profileIsError: isError,
 		profileIsLoading: isLoading,
+		profile,
 	} = state
+
 	return {
 		profile,
 		isError,

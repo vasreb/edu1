@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import loginRequest from './../../actions/loginRequest'
 import { Redirect } from 'react-router'
 import styled from 'styled-components'
+import PropTypes from 'prop-types'
 
 const LoginWrapper = styled.div`
 	margin: 200px auto;
@@ -26,6 +27,18 @@ const LoginError = styled.div`
 
 class Login extends Component {
 	state = {}
+
+	static propTypes = {
+		isError: PropTypes.shape({
+			error: PropTypes.bool.isRequired,
+			payload: PropTypes.string,
+		}),
+		login: PropTypes.shape({
+			isLogin: PropTypes.bool.isRequired,
+			id: PropTypes.number,
+		}),
+		handleSubmit: PropTypes.func.isRequired,
+	}
 
 	handleInputChange = e => {
 		const { name, value } = e.target
@@ -58,7 +71,7 @@ class Login extends Component {
 			<LoginWrapper
 				onSubmit={e => {
 					e.preventDefault()
-					this.props.dispatch(loginRequest(this.state))
+					this.props.handleSubmit(this.state)
 				}}
 			>
 				<LoginForm className="login-form">
@@ -97,7 +110,19 @@ const mapStateToProps = state => {
 	}
 }
 
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
+	const handleSubmit = state => {
+		dispatchProps.dispatch(loginRequest(state))
+	}
+	return {
+		...stateProps,
+		...ownProps,
+		handleSubmit,
+	}
+}
+
 export default connect(
 	mapStateToProps,
-	mapDispatchToProps
+	mapDispatchToProps,
+	mergeProps
 )(Login)

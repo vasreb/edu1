@@ -4,7 +4,7 @@ import {
 	GET_NEWS_ERROR,
 } from './../constants/constants'
 
-export default function photos(state = false, action) {
+export default function newsIsLoading(state = false, action) {
 	switch (action.type) {
 		case GET_NEWS_REQUEST:
 			return true

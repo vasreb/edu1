@@ -1,6 +1,6 @@
 import { GET_NEWS_REQUEST, GET_NEWS_ERROR } from './../constants/constants'
 
-export default function photos(state = false, action) {
+export default function newsIsError(state = false, action) {
 	switch (action.type) {
 		case GET_NEWS_REQUEST:
 			return {

@@ -10,8 +10,8 @@ const Login = React.lazy(() => import('../Login/Login.jsx'))
 const Profile = React.lazy(() => import('../Profile/Profile.jsx'))
 
 const MainWrapper = styled.main`
-	width: 80%;
-	height: 100%;
+	width: 60%;
+	min-height: 100%;
 	background-color: #f7f7f7;
 	margin: 0 auto;
 	display: flex;

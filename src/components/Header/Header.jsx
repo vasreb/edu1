@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import Sign from './../Sign/Sign.jsx'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+import PropTypes from 'prop-types'
 
 const HeaderWrapper = styled.header`
 	top: 0;
@@ -57,6 +58,13 @@ function Header(props) {
 			</HeaderList>
 		</HeaderWrapper>
 	)
+}
+
+Header.propTypes = {
+	login: PropTypes.shape({
+		isLogin: PropTypes.bool.isRequired,
+		id: PropTypes.number,
+	}),
 }
 
 const mapStateToProps = state => {
