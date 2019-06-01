@@ -1,8 +1,20 @@
 import React from 'react';
 import { Component } from 'react';
-import './style.css';
 import { connect } from 'react-redux';
 import fetchProfile from './../../actions/fetchProfile';
+import styled from 'styled-components';
+
+const ProfileList = styled.ul`
+    margin: 0;
+    background-color: #CDDC39;
+`
+const ProfileWrapper = styled.div`
+    width: 50%;
+    margin: 0 auto;
+    border-radius: 5px;
+    border: 2px solid #A11FF4;
+    margin-top: 10px;
+`
 
 class Profile extends Component {
     componentDidMount() {
@@ -41,13 +53,13 @@ class Profile extends Component {
         }
         
         return ( 
-            <div className="profile-wrapper">
-                <ul>
+            <ProfileWrapper>
+                <ProfileList>
                     <li>City: <span>{city}</span> </li>
                     <li>Languages: <ul>{langsLi}</ul> </li>
                     <li>Socials: <ul>{socialsLi}</ul> </li>
-                </ul>
-            </div> 
+                </ProfileList>
+            </ProfileWrapper> 
         )
     }
 }

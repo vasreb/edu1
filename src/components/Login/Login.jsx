@@ -1,10 +1,28 @@
 import React from 'react';
 import { Component } from 'react';
-import './style.css';
 import { connect } from 'react-redux';
 import loginRequest from './../../actions/loginRequest';
 import { Redirect } from 'react-router';
+import styled from 'styled-components'
 
+const LoginWrapper = styled.div`
+    margin-left: auto;
+    margin-right: auto;
+    display: inline-flex;
+    flex-direction: column;
+    padding: 10px;
+    background-color: #CDDC39;  
+`
+const LoginForm = styled.form`
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+`
+const LoginError = styled.div`
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 15px;
+    margin: 5px 0px;
+`
 
 class Login extends Component {
     state = {
@@ -23,13 +41,13 @@ class Login extends Component {
 
         switch (isError.payload) {
             case 'sync_email_undefined':
-                return <h2 className="login__error">Enter email!</h2>
+                return <LoginError>Enter email!</LoginError>
             case 'sync_password_undefined':
-                return <h2 className="login__error">Enter password!</h2>
+                return <LoginError>Enter password!</LoginError>
             case 'wrong_email_or_password':
-                    return <h2 className="login__error">Wrong email or password.</h2>
+                    return <LoginError>Wrong email or password.</LoginError>
             default: 
-                return <h2>Error: {isError.payload}</h2>
+                return <LoginError>Error: {isError.payload}</LoginError>
         }
     }
 
@@ -39,11 +57,11 @@ class Login extends Component {
             return <Redirect to={`/profile/${login.id}`} />
         }
         return (
-            <div className="login" onSubmit={(e) => {
+            <LoginWrapper onSubmit={(e) => {
                 e.preventDefault();
                 this.props.dispatch(loginRequest(this.state));
             }}>
-                <form className="login-form">
+                <LoginForm className="login-form">
                     <label>
                         Email <br></br>
                         <input 
@@ -62,9 +80,9 @@ class Login extends Component {
                     <button type="submit">
                         Sign in
                     </button>
-                </form>
+                </LoginForm>
                 {this.errorHandle(isError)}
-            </div>
+            </LoginWrapper>
         )    
     }
 }

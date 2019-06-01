@@ -1,26 +1,37 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import './style.css';
 import { connect } from 'react-redux';
 import { UNLOGIN } from '../../constants/constants';
+import styled from 'styled-components'
+
+
+const SignText = styled.div`
+    margin: auto;
+    text-decoration: none;
+    color: black;
+`
+
+const StyledLink = styled(Link)`
+    margin: auto;
+    text-decoration: none;
+    color: black;
+`
 
 function Sign (props) {
-
     const { login } = props;
-
     if (login.isLogin) {
         return ( 
-            <div className="sign" onClick={props.unlogin}>
+            <SignText onClick={props.unlogin}>
                 Unlogin
-            </div>
+            </SignText>
         )
     }
     return (
-        <Link to="/login/">
-            <div className="sign">
+        <StyledLink to="/login/">
+            <SignText className="sign">
                 Sign
-            </div>
-        </Link>
+            </SignText>
+        </StyledLink>
     )
 }
 

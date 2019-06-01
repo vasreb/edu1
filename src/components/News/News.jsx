@@ -1,9 +1,22 @@
 import React from 'react';
 import { Component } from 'react';
-import './style.css';
 import { connect } from 'react-redux';
 import fetchNews from './../../actions/fetchNews';
 import Article from './../Article/Article';
+import styled from 'styled-components';
+
+const NewsWrapper = styled.ul`
+    list-style: none;
+    padding: 0;
+    margin: 0;
+`
+const NewsTitle = styled.h2`
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+`
+const NewsItem = styled.li`
+    margin-bottom: 10px;
+    margin-top: 10px;
+`
 
 class News extends Component {
     componentDidMount() {
@@ -13,19 +26,21 @@ class News extends Component {
     render() {
         const { isLoading, isError } = this.props;
         if (isError.error) {
-            return <h2>Load Error: {isError.payload.toString()}</h2>
+            return <NewsTitle>Load Error: {isError.payload.toString()}</NewsTitle>
         }
         if (isLoading) {
-            return <h2>Loading...</h2>
+            return <NewsTitle>Loading...</NewsTitle>
         }
-        const Articles = this.props.articles.map(article => <li className="news__item" key={article.id}><Article data={article}/></li>)
+        const Articles = this.props.articles.map(
+            article => <NewsItem key={article.id}><Article data={article}/></NewsItem>
+        )
         return ( 
-        <div>
-            <h2 className="news__title">News</h2>
-        <ul className="news-wrapper">
-            {Articles}
-        </ul>
-        </div> 
+            <div>
+                <NewsTitle>News</NewsTitle>
+                <NewsWrapper>
+                    {Articles}
+                </NewsWrapper>
+            </div> 
         )
     }
 }
