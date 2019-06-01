@@ -43,6 +43,11 @@
     ]
   },
   "devDependencies": {
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "husky": "^2.3.0",
+    "lint-staged": "^8.1.7",
+    "prettier": "^1.17.1",
     "react-loading-skeleton": "^1.1.2"
   }
 }
