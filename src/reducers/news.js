@@ -11,13 +11,14 @@ export const init = {
 		message: null,
 	},
 	isLoading: false,
+	currentPage: 1,
 }
 
 export default function news(state = init, action) {
 	switch (action.type) {
 		case GET_NEWS_REQUEST:
 			return {
-				articles: [],
+				...state,
 				isLoading: true,
 				error: {
 					isError: false,
@@ -27,8 +28,9 @@ export default function news(state = init, action) {
 		case GET_NEWS_SUCCESS:
 			return {
 				...state,
-				articles: action.payload,
+				articles: state.articles.concat(action.payload),
 				isLoading: false,
+				currentPage: state.currentPage + 1,
 			}
 		case GET_NEWS_ERROR:
 			return {

@@ -9,6 +9,7 @@ describe('articles test', () => {
 		}
 
 		expect(news(init, action)).toEqual({
+			...init,
 			articles: [],
 			isLoading: true,
 			error: {
@@ -27,6 +28,7 @@ describe('articles test', () => {
 			...init,
 			isLoading: false,
 			articles: action.payload,
+			currentPage: init.currentPage + 1,
 		})
 	})
 	it('GET_NEWS_ERROR', () => {

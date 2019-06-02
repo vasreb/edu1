@@ -10,7 +10,7 @@ const StyledArticle = styled.article`
 	transition: transform, opacity 0.2s ease-in-out;
 	:hover {
 		opacity: 0.7;
-		transform: scale(1.02);
+		transform: scale(0.98);
 	}
 `
 

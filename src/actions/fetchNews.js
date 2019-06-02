@@ -2,16 +2,17 @@ import {
 	GET_NEWS_REQUEST,
 	GET_NEWS_SUCCESS,
 	GET_NEWS_ERROR,
-	newsEndpoint,
 } from './../constants/constants'
 
-export default function fetchNews() {
+export default function fetchNews(page = 1) {
 	return async dispatch => {
 		dispatch({
 			type: GET_NEWS_REQUEST,
 		})
 		try {
-			let res = await fetch(newsEndpoint)
+			let res = await fetch(
+				`https://newsapi.org/v2/top-headlines?country=en&page=${page}&apiKey=bff07d240dcc49b795616f104a9c55f9`
+			)
 			res = await res.json()
 			if (res.status === 'ok') {
 				res = res.articles.map(article => {

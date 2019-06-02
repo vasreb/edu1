@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import fetchNews from './../../actions/fetchNews'
 import Article from './../Article/Article'
 import styled from 'styled-components'
+import InfiniteScroll from 'react-infinite-scroller'
 
 const NewsWrapper = styled.ul`
 	display: grid;
@@ -34,7 +35,7 @@ const SkeletonArticles = Array(14)
 
 class News extends Component {
 	componentDidMount() {
-		this.props.load()
+		this.props.load(this.props.currentPage)
 	}
 
 	handleError = error => {
@@ -43,7 +44,6 @@ class News extends Component {
 				return <NewsTitle>Load Error: {error.message.toString()}</NewsTitle>
 		}
 	}
-
 	render() {
 		const { isLoading, error } = this.props
 		if (error.isError) {
@@ -58,19 +58,31 @@ class News extends Component {
 		return (
 			<div>
 				<NewsTitle>News</NewsTitle>
-				<NewsWrapper>{!isLoading ? Articles : SkeletonArticles}</NewsWrapper>
+				<InfiniteScroll
+					pageStart={0}
+					loadMore={() => {
+						this.props.load(this.props.currentPage)
+					}}
+					loader={<NewsTitle key={0}>Loading...</NewsTitle>}
+					hasMore={isLoading ? false : true}
+					initialLoad={false}
+					threshold={100}
+				>
+					<NewsWrapper>{!isLoading ? Articles : SkeletonArticles}</NewsWrapper>
+				</InfiniteScroll>
 			</div>
 		)
 	}
 }
 
 const mapStateToProps = state => {
-	const { articles, error, isLoading } = state.news
+	const { articles, error, isLoading, currentPage } = state.news
 
 	return {
 		articles,
 		error,
 		isLoading,
+		currentPage,
 	}
 }
 
@@ -80,10 +92,10 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-const mergeProps = (stateProps, dispatchProps, ownProps) => {
+const mergeProps = (stateProps, dispatchProps) => {
 	const { dispatch } = dispatchProps
-	const load = () => {
-		dispatch(fetchNews())
+	const load = page => {
+		dispatch(fetchNews(page))
 	}
 
 	return {
