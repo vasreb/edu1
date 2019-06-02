@@ -21,14 +21,18 @@ describe('articles test', () => {
 	it('GET_NEWS_SUCCESS', () => {
 		const action = {
 			type: c.GET_NEWS_SUCCESS,
-			payload: [1, 1, 1],
+			payload: {
+				articles: [1, 1, 1],
+				totalResults: 228,
+			},
 		}
-
+		const { articles, totalResults } = action.payload
 		expect(news(init, action)).toEqual({
 			...init,
 			isLoading: false,
-			articles: action.payload,
+			articles: init.concat(articles),
 			currentPage: init.currentPage + 1,
+			totalResults,
 		})
 	})
 	it('GET_NEWS_ERROR', () => {

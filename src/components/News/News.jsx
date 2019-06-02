@@ -45,7 +45,7 @@ class News extends Component {
 		}
 	}
 	render() {
-		const { isLoading, error } = this.props
+		const { isLoading, error, currentPage, totalResults } = this.props
 		if (error.isError) {
 			return this.handleError(error)
 		}
@@ -61,10 +61,18 @@ class News extends Component {
 				<InfiniteScroll
 					pageStart={0}
 					loadMore={() => {
-						this.props.load(this.props.currentPage)
+						this.props.load(currentPage)
 					}}
 					loader={<NewsTitle key={0}>Loading...</NewsTitle>}
-					hasMore={isLoading ? false : true}
+					hasMore={
+						isLoading
+							? false
+							: !(currentPage < 6)
+							? false
+							: totalResults === Articles.length
+							? false
+							: true
+					}
 					initialLoad={false}
 					threshold={100}
 				>
@@ -76,13 +84,14 @@ class News extends Component {
 }
 
 const mapStateToProps = state => {
-	const { articles, error, isLoading, currentPage } = state.news
+	const { articles, error, isLoading, currentPage, totalResults } = state.news
 
 	return {
 		articles,
 		error,
 		isLoading,
 		currentPage,
+		totalResults,
 	}
 }
 

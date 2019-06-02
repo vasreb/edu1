@@ -11,11 +11,12 @@ export default function fetchNews(page = 1) {
 		})
 		try {
 			let res = await fetch(
-				`https://newsapi.org/v2/top-headlines?country=en&page=${page}&apiKey=bff07d240dcc49b795616f104a9c55f9`
+				`https://newsapi.org/v2/everything?language=ru&sources=google-news-ru&page=${page}&apiKey=bff07d240dcc49b795616f104a9c55f9`
 			)
 			res = await res.json()
 			if (res.status === 'ok') {
-				res = res.articles.map(article => {
+				const { totalResults } = res
+				const articles = res.articles.map(article => {
 					const { title, description, publishedAt, url } = article
 					return {
 						title,
@@ -26,7 +27,10 @@ export default function fetchNews(page = 1) {
 				})
 				dispatch({
 					type: GET_NEWS_SUCCESS,
-					payload: res,
+					payload: {
+						totalResults,
+						articles,
+					},
 				})
 			} else {
 				throw new Error(res.status)

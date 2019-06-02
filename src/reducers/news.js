@@ -26,11 +26,13 @@ export default function news(state = init, action) {
 				},
 			}
 		case GET_NEWS_SUCCESS:
+			const { articles, totalResults } = action.payload
 			return {
 				...state,
-				articles: state.articles.concat(action.payload),
+				articles: state.articles.concat(articles),
 				isLoading: false,
 				currentPage: state.currentPage + 1,
+				totalResults,
 			}
 		case GET_NEWS_ERROR:
 			return {
