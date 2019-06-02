@@ -17,12 +17,13 @@ export default function fetchNews(page = 1) {
 			if (res.status === 'ok') {
 				const { totalResults } = res
 				const articles = res.articles.map(article => {
-					const { title, description, publishedAt, url } = article
+					const { title, description, publishedAt, url, urlToImage } = article
 					return {
 						title,
 						id: publishedAt,
 						text: description,
 						url,
+						urlToImage,
 					}
 				})
 				dispatch({

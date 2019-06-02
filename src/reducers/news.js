@@ -5,7 +5,8 @@ import {
 } from './../constants/constants'
 
 export const init = {
-	articles: [],
+    articles: [],
+    totalResults: null,
 	error: {
 		isError: false,
 		message: null,

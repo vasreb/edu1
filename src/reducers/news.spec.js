@@ -30,7 +30,7 @@ describe('articles test', () => {
 		expect(news(init, action)).toEqual({
 			...init,
 			isLoading: false,
-			articles: init.concat(articles),
+			articles: init.articles.concat(articles),
 			currentPage: init.currentPage + 1,
 			totalResults,
 		})

@@ -8,6 +8,7 @@ const StyledArticle = styled.article`
 	padding: 10px;
 	font-size: 22px;
 	transition: transform, opacity 0.2s ease-in-out;
+	background-image: url(${props => (!props.data ? '' : props.data.urlToImage)});
 	:hover {
 		opacity: 0.7;
 		transform: scale(0.98);
@@ -41,6 +42,7 @@ class Article extends Component {
 	}
 
 	render() {
+		console.log(this.props.data)
 		const { title, text, url } = this.props.data
 		return (
 			<StyledA href={url}>
