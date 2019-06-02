@@ -7,7 +7,7 @@ import styled from 'styled-components'
 
 const NewsWrapper = styled.ul`
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
 	align-items: baseline;
 	grid-gap: 1vw;
 	width: 100%;
