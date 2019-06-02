@@ -15,11 +15,12 @@ export default function fetchNews() {
 			res = await res.json()
 			if (res.status === 'ok') {
 				res = res.articles.map(article => {
-					const { title, description, publishedAt } = article
+					const { title, description, publishedAt, url } = article
 					return {
 						title,
 						id: publishedAt,
 						text: description,
+						url,
 					}
 				})
 				dispatch({
