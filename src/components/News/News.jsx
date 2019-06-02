@@ -6,7 +6,11 @@ import Article from './../Article/Article'
 import styled from 'styled-components'
 
 const NewsWrapper = styled.ul`
-	width: 70%;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	align-items: baseline;
+	grid-gap: 1vw;
+	width: 100%;
 	list-style: none;
 	padding: 0;
 	margin: 0 auto;
@@ -20,21 +24,30 @@ const NewsItem = styled.li`
 	margin-top: 10px;
 `
 
-const SkeletonArticles = [1, 1].map((n, index) => (
-	<NewsItem key={index}>
-		<Article />
-	</NewsItem>
-))
+const SkeletonArticles = Array(14)
+	.fill(1)
+	.map((n, index) => (
+		<NewsItem key={index}>
+			<Article />
+		</NewsItem>
+	))
 
 class News extends Component {
 	componentDidMount() {
 		this.props.load()
 	}
 
+	handleError = error => {
+		switch (error.message) {
+			default:
+				return <NewsTitle>Load Error: {error.message.toString()}</NewsTitle>
+		}
+	}
+
 	render() {
-		const { isLoading, isError } = this.props
-		if (isError.error) {
-			return <NewsTitle>Load Error: {isError.payload.toString()}</NewsTitle>
+		const { isLoading, error } = this.props
+		if (error.isError) {
+			return this.handleError(error)
 		}
 		const Articles = this.props.articles.map(article => (
 			<NewsItem key={article.id}>
@@ -52,10 +65,11 @@ class News extends Component {
 }
 
 const mapStateToProps = state => {
-	const { articles, newsIsError: isError, newsIsLoading: isLoading } = state
+	const { articles, error, isLoading } = state.news
+
 	return {
 		articles,
-		isError,
+		error,
 		isLoading,
 	}
 }
@@ -66,7 +80,7 @@ const mapDispatchToProps = dispatch => {
 	}
 }
 
-const mergeProps = (stateProps, dispatchProps) => {
+const mergeProps = (stateProps, dispatchProps, ownProps) => {
 	const { dispatch } = dispatchProps
 	const load = () => {
 		dispatch(fetchNews())

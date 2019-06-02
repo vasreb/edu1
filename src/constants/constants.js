@@ -11,6 +11,11 @@ const POST_LOGIN_SUCCESS = 'POST_LOGIN_SUCCESS'
 const POST_LOGIN_ERROR = 'POST_LOGIN_ERROR'
 const UNLOGIN = 'UNLOGIN'
 
+//Endpoints
+
+const newsEndpoint =
+	'https://newsapi.org/v2/everything?sortBy=popularity&sources=google-news-ru&language=ru&apiKey=bff07d240dcc49b795616f104a9c55f9'
+
 export {
 	GET_NEWS_ERROR,
 	GET_NEWS_REQUEST,
@@ -22,4 +27,5 @@ export {
 	POST_LOGIN_SUCCESS,
 	POST_LOGIN_ERROR,
 	UNLOGIN,
+	newsEndpoint,
 }

@@ -1,11 +1,11 @@
 import {
-	GET_PROFILE_REQUEST,
-	GET_PROFILE_SUCCESS,
-	GET_PROFILE_ERROR,
-} from '../constants/constants'
+	GET_NEWS_REQUEST,
+	GET_NEWS_SUCCESS,
+	GET_NEWS_ERROR,
+} from './../constants/constants'
 
 export const init = {
-	user: {},
+	articles: [],
 	error: {
 		isError: false,
 		message: null,
@@ -13,25 +13,24 @@ export const init = {
 	isLoading: false,
 }
 
-export default function profile(state = init, action) {
+export default function news(state = init, action) {
 	switch (action.type) {
-		case GET_PROFILE_REQUEST:
+		case GET_NEWS_REQUEST:
 			return {
-				...state,
-				user: {},
+				articles: [],
 				isLoading: true,
 				error: {
 					isError: false,
 					message: null,
 				},
 			}
-		case GET_PROFILE_SUCCESS:
+		case GET_NEWS_SUCCESS:
 			return {
 				...state,
+				articles: action.payload,
 				isLoading: false,
-				user: action.payload,
 			}
-		case GET_PROFILE_ERROR:
+		case GET_NEWS_ERROR:
 			return {
 				...state,
 				isLoading: false,

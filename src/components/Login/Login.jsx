@@ -47,10 +47,8 @@ class Login extends Component {
 		})
 	}
 
-	errorHandle = isError => {
-		if (!isError.error) return ''
-
-		switch (isError.payload) {
+	errorHandle = error => {
+		switch (error.message) {
 			case 'sync_email_undefined':
 				return <LoginError>Enter email!</LoginError>
 			case 'sync_password_undefined':
@@ -58,12 +56,12 @@ class Login extends Component {
 			case 'wrong_email_or_password':
 				return <LoginError>Wrong email or password.</LoginError>
 			default:
-				return <LoginError>Error: {isError.payload}</LoginError>
+				return <LoginError>Error: {error.message}</LoginError>
 		}
 	}
 
 	render() {
-		const { isError, login } = this.props
+		const { error, login } = this.props
 		if (login.isLogin) {
 			return <Redirect to={`/profile/${login.id}`} />
 		}
@@ -90,7 +88,7 @@ class Login extends Component {
 					<br />
 					<button type="submit">Sign in</button>
 				</LoginForm>
-				{this.errorHandle(isError)}
+				{error.isError ? this.errorHandle(error) : null}
 			</LoginWrapper>
 		)
 	}
@@ -103,10 +101,10 @@ const mapDispatchToProps = dispatch => {
 }
 
 const mapStateToProps = state => {
-	const { loginIsError: isError, login } = state
+	const { error, login } = state.login
 	return {
-		isError,
 		login,
+		error,
 	}
 }
 

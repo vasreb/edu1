@@ -17,6 +17,7 @@ const ProfileWrapper = styled.div`
 	border: 2px solid #e8eeee;
 	box-shadow: 0px 0px 22px -20px black;
 	margin-top: 10px;
+	word-break: break-all;
 `
 const ProfileError = styled.h2`
 	font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -36,9 +37,9 @@ class Profile extends Component {
 				})
 			),
 		}),
-		isError: PropTypes.shape({
-			error: PropTypes.bool.isRequired,
-			payload: PropTypes.string,
+		error: PropTypes.shape({
+			isError: PropTypes.bool.isRequired,
+			message: PropTypes.string,
 		}).isRequired,
 	}
 
@@ -46,23 +47,23 @@ class Profile extends Component {
 		this.props.load()
 	}
 
-	errorHandle = isError => {
-		switch (isError.payload) {
+	errorHandle = error => {
+		switch (error.message) {
 			case 'user_not_found':
 				return <ProfileError>User not found</ProfileError>
 			case 'wrong_user_data':
 				return <ProfileError>Wrong user data</ProfileError>
 			default:
-				return <h2>Error: {isError.payload}</h2>
+				return <h2>Error: {error.message}</h2>
 		}
 	}
 
 	render() {
-		let { city, languages, social } = this.props.profile
-		const { isError, isLoading } = this.props
+		let { city, languages, social } = this.props.user
+		const { error, isLoading } = this.props
 
-		if (isError.error) {
-			return this.errorHandle(isError)
+		if (error.isError) {
+			return this.errorHandle(error)
 		}
 
 		try {
@@ -79,7 +80,7 @@ class Profile extends Component {
 				))
 			}
 		} catch (e) {
-			this.errorHandle({ error: true, payload: 'wrong_user_data' })
+			this.errorHandle({ error: true, message: 'wrong_user_data' })
 		}
 
 		return (
@@ -101,16 +102,12 @@ class Profile extends Component {
 }
 
 const mapStateToProps = state => {
-	const {
-		profileIsError: isError,
-		profileIsLoading: isLoading,
-		profile,
-	} = state
+	const { error, isLoading, user } = state.profile
 
 	return {
-		profile,
-		isError,
+		error,
 		isLoading,
+		user,
 	}
 }
 

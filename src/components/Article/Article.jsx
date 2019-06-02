@@ -10,10 +10,11 @@ const StyledArticle = styled.article`
 `
 
 const ArticleTitle = styled.h3`
-	font-size: 1.95em;
-	line-height: 1.2em;
-	margin-top: 0.6em;
-	margin-bottom: 2.41;
+	font-size: 1.22em;
+	line-height: 1.03em;
+	margin-bottom: 1.03em;
+	margin-top: 1.03em;
+	word-break: break-all;
 `
 
 const ArticleParagraph = styled.p`

@@ -29,7 +29,7 @@ function Sign(props) {
 }
 
 const mapStateToProps = state => {
-	const { login } = state
+	const { login } = state.login
 	return {
 		login,
 	}

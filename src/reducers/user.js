@@ -4,14 +4,14 @@ import {
 	GET_PROFILE_ERROR,
 } from './../constants/constants'
 
-export default function profileIsLoading(state = true, action) {
+export default function profile(state = {}, action) {
 	switch (action.type) {
 		case GET_PROFILE_REQUEST:
-			return true
+			return {}
 		case GET_PROFILE_SUCCESS:
-			return false
+			return Object.assign({}, action.payload)
 		case GET_PROFILE_ERROR:
-			return false
+			return {}
 		default:
 			return state
 	}
