@@ -19,6 +19,15 @@ describe('articles test', () => {
 		})
 	})
 	it('GET_NEWS_SUCCESS', () => {
+		const initState = {
+			...init,
+			isLoading: true,
+			articles: [],
+			error: {
+				isError: false,
+				message: null,
+			},
+		}
 		const action = {
 			type: c.GET_NEWS_SUCCESS,
 			payload: {
@@ -28,7 +37,7 @@ describe('articles test', () => {
 		}
 		const { articles, totalResults } = action.payload
 		expect(news(init, action)).toEqual({
-			...init,
+			...initState,
 			isLoading: false,
 			articles: init.articles.concat(articles),
 			currentPage: init.currentPage + 1,
@@ -36,12 +45,21 @@ describe('articles test', () => {
 		})
 	})
 	it('GET_NEWS_ERROR', () => {
+		const initState = {
+			...init,
+			isLoading: true,
+			articles: [],
+			error: {
+				isError: false,
+				message: null,
+			},
+		}
 		const action = {
 			type: c.GET_NEWS_ERROR,
 			payload: 'some',
 		}
 		expect(news(init, action)).toEqual({
-			...init,
+			...initState,
 			isLoading: false,
 			error: {
 				isError: true,

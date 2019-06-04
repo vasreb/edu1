@@ -17,13 +17,21 @@ describe('login test', () => {
 		})
 	})
 	it('POST_LOGIN_SUCCESS', () => {
+		const initialState = {
+			...init,
+			error: {
+				isError: false,
+				message: null,
+			},
+		}
+
 		const action = {
 			type: c.POST_LOGIN_SUCCESS,
 			payload: { id: 1 },
 		}
 
 		expect(login(init, action)).toEqual({
-			...init,
+			...initialState,
 			login: {
 				isLogin: true,
 				id: action.payload.id,
@@ -31,12 +39,20 @@ describe('login test', () => {
 		})
 	})
 	it('POST_LOGIN_ERROR', () => {
+		const initialState = {
+			...init,
+			error: {
+				isError: false,
+				message: null,
+			},
+		}
+
 		const action = {
 			type: c.POST_LOGIN_ERROR,
 			payload: 'some_err',
 		}
 		expect(login(init, action)).toEqual({
-			...init,
+			...initialState,
 			error: {
 				isError: true,
 				message: action.payload,
@@ -44,11 +60,22 @@ describe('login test', () => {
 		})
 	})
 	it('UNLOGIN', () => {
+		const initialState = {
+			...init,
+			error: {
+				isError: false,
+				message: null,
+			},
+			login: {
+				isLogin: true,
+				id: 1,
+			},
+		}
 		const action = {
 			type: c.UNLOGIN,
 		}
 		expect(login(init, action)).toEqual({
-			...init,
+			...initialState,
 			login: {
 				isLogin: false,
 			},
