@@ -1,5 +1,5 @@
 import React from 'react'
-import { Component } from 'react'
+import { useState } from 'react'
 import { connect } from 'react-redux'
 import loginRequest from './../../actions/loginRequest'
 import { Redirect } from 'react-router'
@@ -24,30 +24,27 @@ const LoginError = styled.div`
 	font-size: 15px;
 	margin: 5px 0px;
 `
+Login.propTypes = {
+	isError: PropTypes.shape({
+		error: PropTypes.bool.isRequired,
+		payload: PropTypes.string,
+	}),
+	login: PropTypes.shape({
+		isLogin: PropTypes.bool.isRequired,
+		id: PropTypes.number,
+	}),
+	handleSubmit: PropTypes.func.isRequired,
+}
 
-class Login extends Component {
-	state = {}
+function Login(props) {
+	const [email, setEmail] = useState(null)
+	const [password, setPassword] = useState(null)
 
-	static propTypes = {
-		isError: PropTypes.shape({
-			error: PropTypes.bool.isRequired,
-			payload: PropTypes.string,
-		}),
-		login: PropTypes.shape({
-			isLogin: PropTypes.bool.isRequired,
-			id: PropTypes.number,
-		}),
-		handleSubmit: PropTypes.func.isRequired,
-	}
+	const handleEmailChange = e => setEmail(e.target.value)
 
-	handleInputChange = e => {
-		const { name, value } = e.target
-		this.setState({
-			[name]: value,
-		})
-	}
+	const handlePasswordChange = e => setPassword(e.target.value)
 
-	errorHandle = error => {
+	const errorHandle = error => {
 		switch (error.message) {
 			case 'sync_email_undefined':
 				return <LoginError>Enter email!</LoginError>
@@ -59,39 +56,36 @@ class Login extends Component {
 				return <LoginError>Error: {error.message}</LoginError>
 		}
 	}
-
-	render() {
-		const { error, login } = this.props
-		if (login.isLogin) {
-			return <Redirect to={`/profile/${login.id}`} />
-		}
-		return (
-			<LoginWrapper
-				onSubmit={e => {
-					e.preventDefault()
-					this.props.handleSubmit(this.state)
-				}}
-			>
-				<LoginForm className="login-form">
-					<label>
-						Email <br />
-						<input name="email" type="text" onChange={this.handleInputChange} />
-					</label>
-					<label>
-						Password <br />
-						<input
-							name="password"
-							type="password"
-							onChange={this.handleInputChange}
-						/>
-					</label>
-					<br />
-					<button type="submit">Sign in</button>
-				</LoginForm>
-				{error.isError ? this.errorHandle(error) : null}
-			</LoginWrapper>
-		)
+	const { error, login } = props
+	if (login.isLogin) {
+		return <Redirect to={`/profile/${login.id}`} />
 	}
+	return (
+		<LoginWrapper
+			onSubmit={e => {
+				e.preventDefault()
+				props.handleSubmit({ email, password })
+			}}
+		>
+			<LoginForm className="login-form">
+				<label>
+					Email <br />
+					<input name="email" type="text" onChange={handleEmailChange} />
+				</label>
+				<label>
+					Password <br />
+					<input
+						name="password"
+						type="password"
+						onChange={handlePasswordChange}
+					/>
+				</label>
+				<br />
+				<button type="submit">Sign in</button>
+			</LoginForm>
+			{error.isError ? errorHandle(error) : null}
+		</LoginWrapper>
+	)
 }
 
 const mapDispatchToProps = dispatch => {
