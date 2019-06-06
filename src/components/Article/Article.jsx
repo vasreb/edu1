@@ -42,7 +42,6 @@ class Article extends Component {
 	}
 
 	render() {
-		console.log(this.props.data)
 		const { title, text, url } = this.props.data
 		return (
 			<StyledA href={url}>

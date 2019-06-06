@@ -34,12 +34,12 @@ export default function fetchNews(page = 1) {
 					},
 				})
 			} else {
-				throw new Error(res.status)
+				throw new Error(res.message)
 			}
 		} catch (err) {
 			dispatch({
 				type: GET_NEWS_ERROR,
-				payload: err,
+				payload: err.message,
 			})
 		}
 	}

@@ -7,7 +7,9 @@
       "jsx-quotes": [
         1,
         "prefer-double"
-      ]
+      ],
+      "react-hooks/rules-of-hooks": "error", 
+      "react-hooks/exhaustive-deps": "warn" 
     },
     "plugins": [
       "prettier"
