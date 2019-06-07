@@ -1,5 +1,4 @@
 import React from 'react'
-import { Component } from 'react'
 import styled from 'styled-components'
 import Skeleton from 'react-loading-skeleton'
 
@@ -33,27 +32,25 @@ const StyledA = styled.a`
 	color: #333333;
 `
 
-class Article extends Component {
-	static defaultProps = {
-		data: {
-			title: <Skeleton count={3} />,
-			text: <Skeleton count={5} />,
-		},
-	}
+Article.defaultProps = {
+	data: {
+		title: <Skeleton count={3} />,
+		text: <Skeleton count={5} />,
+	},
+}
 
-	render() {
-		const { title, text, url } = this.props.data
-		return (
-			<StyledA href={url}>
-				<StyledArticle>
-					<header>
-						<ArticleTitle>{title}</ArticleTitle>
-					</header>
-					<ArticleParagraph>{text}</ArticleParagraph>
-				</StyledArticle>
-			</StyledA>
-		)
-	}
+function Article(props) {
+	const { title, text, url } = props.data
+	return (
+		<StyledA href={url}>
+			<StyledArticle>
+				<header>
+					<ArticleTitle>{title}</ArticleTitle>
+				</header>
+				<ArticleParagraph>{text}</ArticleParagraph>
+			</StyledArticle>
+		</StyledA>
+	)
 }
 
 export default Article

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Component } from 'react'
+import { useEffect } from 'react'
 import { connect } from 'react-redux'
 import fetchNews from './../../actions/fetchNews'
 import Article from './../Article/Article'
@@ -33,54 +33,52 @@ const SkeletonArticles = Array(14)
 		</NewsItem>
 	))
 
-class News extends Component {
-	componentDidMount() {
-		this.props.load(this.props.currentPage)
-	}
+function News(props) {
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => props.load(props.currentPage), [])
 
-	handleError = error => {
+	const handleError = error => {
 		switch (error.message) {
 			default:
 				return <NewsTitle>Load Error: {error.message.toString()}</NewsTitle>
 		}
 	}
-	render() {
-		const { isLoading, error, currentPage, totalResults } = this.props
-		if (error.isError) {
-			return this.handleError(error)
-		}
-		const Articles = this.props.articles.map(article => (
-			<NewsItem key={article.id}>
-				<Article data={article} />
-			</NewsItem>
-		))
 
-		return (
-			<div>
-				<NewsTitle>News</NewsTitle>
-				<InfiniteScroll
-					pageStart={0}
-					loadMore={() => {
-						this.props.load(currentPage)
-					}}
-					loader={<NewsTitle key={0}>Loading...</NewsTitle>}
-					hasMore={
-						isLoading
-							? false
-							: !(currentPage < 6)
-							? false
-							: totalResults === Articles.length
-							? false
-							: true
-					}
-					initialLoad={false}
-					threshold={100}
-				>
-					<NewsWrapper>{!isLoading ? Articles : SkeletonArticles}</NewsWrapper>
-				</InfiniteScroll>
-			</div>
-		)
+	const { isLoading, error, currentPage, totalResults } = props
+	if (error.isError) {
+		return handleError(error)
 	}
+	const Articles = props.articles.map(article => (
+		<NewsItem key={article.id}>
+			<Article data={article} />
+		</NewsItem>
+	))
+
+	return (
+		<div>
+			<NewsTitle>News</NewsTitle>
+			<InfiniteScroll
+				pageStart={0}
+				loadMore={() => {
+					props.load(currentPage)
+				}}
+				loader={<NewsTitle key={0}>Loading...</NewsTitle>}
+				hasMore={
+					isLoading
+						? false
+						: !(currentPage < 6)
+						? false
+						: totalResults === Articles.length
+						? false
+						: true
+				}
+				initialLoad={false}
+				threshold={100}
+			>
+				<NewsWrapper>{!isLoading ? Articles : SkeletonArticles}</NewsWrapper>
+			</InfiniteScroll>
+		</div>
+	)
 }
 
 const mapStateToProps = state => {

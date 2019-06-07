@@ -11,7 +11,7 @@ export default function fetchNews(page = 1) {
 		})
 		try {
 			let res = await fetch(
-				`https://newsapi.org/v2/everything?language=ru&sources=google-news-ru&page=${page}&apiKey=bff07d240dcc49b795616f104a9c55f9`
+				`https://newsapi.org/v2/top-headlines?country=ru&page=${page}&apiKey=bff07d240dcc49b795616f104a9c55f9`
 			)
 			res = await res.json()
 			if (res.status === 'ok') {

@@ -6,7 +6,6 @@ import {
 import loginRequest from './loginRequest'
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
-import fetchMock from 'fetch-mock'
 import expect from 'expect'
 import MockAdapter from 'axios-mock-adapter'
 import axios from 'axios'
